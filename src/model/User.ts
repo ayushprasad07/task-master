@@ -1,7 +1,6 @@
 import mongoose , {Document,Schema}from "mongoose";
 
-interface Note extends Document{
-    _id : mongoose.Types.ObjectId;
+export interface Note{
     title : string;
     description : string;
     createdAt : Date;
@@ -22,8 +21,7 @@ const noteSchema : Schema<Note> = new Schema<Note>({
     }
 })
 
-interface PDF extends Document{
-    _id : mongoose.Types.ObjectId;
+export interface PDF{
     title : string;
     description : string;
     url : string;
@@ -49,13 +47,12 @@ const pdfSchema : Schema<PDF> = new Schema<PDF>({
     }
 })
 
-interface YouTube extends Document{
-    _id: mongoose.Types.ObjectId;
+export interface YouTube {
     title : string;
     description : string;
     url : string;
     preview : string;
-    createdAt : Date;
+    createdAt ?: Date;
 }
 
 const youtubeSchema : Schema<YouTube> = new Schema<YouTube>({
@@ -81,7 +78,7 @@ const youtubeSchema : Schema<YouTube> = new Schema<YouTube>({
     }
 })
 
-interface User extends Document{
+export interface User extends Document{
     _id : mongoose.Types.ObjectId;
     username : string;
     email : string;
