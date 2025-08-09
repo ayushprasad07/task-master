@@ -51,7 +51,15 @@ export async function GET(req : Request){
             })
         }
 
-        return Response.json({success : true,message : "Notes fetched successfully",notes : user[0].notes},{status : 200});
+        return Response.json({
+            success : true,
+            message : "Notes fetched successfully",
+            notes : user[0].notes
+        },{
+            status : 200
+        });
+
+        
     } catch (error) {
         console.log("Error while getting notes",error);
         return Response.json({success : false,message : "Error while getting notes"},{status : 500});

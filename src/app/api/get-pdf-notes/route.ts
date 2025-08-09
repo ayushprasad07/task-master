@@ -1,17 +1,14 @@
 import dbConnect from "@/lib/dbConnect";
 import { UserModel } from "@/model/User";
-import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
-import { User } from "next-auth";
+import { getServerSession, User } from "next-auth";
 
 
-export async function GET(request : Request){
+export async function GET(req : Request){
     await dbConnect()
-
 
     const session = await getServerSession(authOptions)
     const user : User = session?.user as User
-
 
     if(!session || !session.user){
         return Response.json({
@@ -25,17 +22,18 @@ export async function GET(request : Request){
     const userId = user._id;
 
     try {
+        
         const user = await UserModel.aggregate([
             {$match : {_id : userId}},
-            { $unwind : {path : "$youtubes" , preserveNullAndEmptyArrays : true}},
+            { $unwind : {path : "$pdf" , preserveNullAndEmptyArrays : true}},
             {
-                $sort : {"youtubes.createdAt" : -1}
+                $sort : {"pdf.createdAt" : -1}
             },
             {
                 $group : {
                     _id : "$_id",
-                    youtubes : {
-                        $push : "$youtubes"
+                    pdf : {
+                        $push : "$pdf"
                     }
                 }
             }
@@ -47,24 +45,24 @@ export async function GET(request : Request){
                 message : "User not found"
             },{
                 status : 404
-            })
-        } 
-
+            });
+        }
 
         return Response.json({
             success : true,
-            message : "Youtube Notes fetched Successfully",
-            data : user[0].youtubes
+            message : "Pdf notes fetched successfully",
+            data : user[0].pdf
         },{
             status : 200
-        })
+        });
+
     } catch (error) {
-        console.log("Error connecting to DB",error);
+        console.log("Error while getting pdf notes",error);
         return Response.json({
             success : false,
-            message : "Error connecting to DB"
+            message : "Error while getting pdf notes"
         },{
             status : 500
-        })
+        });
     }
 }

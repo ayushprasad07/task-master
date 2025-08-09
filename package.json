@@ -9,14 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^1.13.0",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
+    "fs": "^0.0.1-security",
     "mongoose": "^8.17.0",
     "multer": "^2.0.2",
     "next": "15.4.5",
     "next-auth": "^4.24.11",
     "nodemailer": "^6.10.1",
+    "pdf-parse": "^1.1.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zod": "^4.0.15"
@@ -26,6 +31,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nodemailer": "^6.4.17",
+    "@types/pdf-parse": "^1.1.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
