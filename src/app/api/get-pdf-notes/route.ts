@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import { UserModel } from "@/model/User";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { getServerSession, User } from "next-auth";
+import mongoose from "mongoose";
 
 
 export async function GET(req : Request){
@@ -19,7 +20,7 @@ export async function GET(req : Request){
         })
     }
 
-    const userId = user._id;
+    const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
         

@@ -3,6 +3,7 @@ import { UserModel } from "@/model/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { User } from "next-auth";
+import mongoose from "mongoose";
 
 
 export async function GET(request : Request){
@@ -18,11 +19,11 @@ export async function GET(request : Request){
             success : false,
             message : "User not authenticated"
         },{
-            status : 404
+            status : 401
         })
     }
 
-    const userId = user._id;
+    const userId = new mongoose.Types.ObjectId(user._id);
 
     try {
         const user = await UserModel.aggregate([

@@ -3,6 +3,7 @@ import { UserModel } from "@/model/User";
 import { getServerSession } from "next-auth";
 import { User } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/options";
+import mongoose from "mongoose";
 
 
 
@@ -22,7 +23,7 @@ export async function GET(req : Request){
         })
     }
 
-    const userId = user._id;
+    const userId = new mongoose.Types.ObjectId(user._id);
 
 
     try {
