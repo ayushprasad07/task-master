@@ -96,7 +96,7 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
+          className="fixed [perspective:800px] [transform-style:preserve-3d] inset-0 px-4 h-full w-full  flex items-center justify-center z-50"
         >
           <Overlay />
 
@@ -194,6 +194,7 @@ const CloseIcon = () => {
   const { setOpen } = useModal();
   return (
     <button
+      type="button"
       onClick={() => setOpen(false)}
       className="absolute top-4 right-4 group"
     >
@@ -207,7 +208,7 @@ const CloseIcon = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="text-black dark:text-white h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200"
+        className="text-black cursor-pointer dark:text-white h-4 w-4 group-hover:scale-125 group-hover:rotate-3 transition duration-200"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 6l-12 12" />

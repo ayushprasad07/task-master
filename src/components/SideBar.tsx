@@ -6,7 +6,8 @@ import {
   IconBrandYoutube,
   IconNotes,
   IconFileText,
-  IconFileDescription
+  IconFileDescription,
+  IconLogout,   
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
@@ -21,11 +22,16 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
   ];
   const [open, setOpen] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    window.location.href = "/sign-in";  
+  };
+
   return (
-    <div className={cn("mx-auto flex w-full flex-1 flex-col overflow-hidden border bg-gray-100 md:flex-row dark:bg-neutral-800", "h-[93vh]","mt-14")}>
+    <div className={cn("mx-auto flex w-full flex-1 flex-col overflow-hidden border bg-gray-100 md:flex-row dark:bg-neutral-800", "h-[100vh]")}>
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
+          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto gap-y-5">
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
@@ -33,26 +39,20 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
               ))}
             </div>
           </div>
-          <SidebarLink
-            link={{
-              label: "Manu Arora",
-              href: "#",
-              icon: (
-                <img
-                  src="https://assets.aceternity.com/manu.png"
-                  className="h-7 w-7 shrink-0 rounded-full"
-                  width={50}
-                  height={50}
-                  alt="Avatar"
-                />
-              ),
-            }}
-          />
+
+          <div className="mt-auto flex justify-end">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 w-full rounded-md px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-100 dark:hover:bg-red-900/40 transition cursor-pointer"
+            >
+              <IconLogout className="h-5 w-5 shrink-0" />
+              {open && <span>Logout</span>}
+            </button>
+          </div>
         </SidebarBody>
       </Sidebar>
 
-      {/* Page Content */}
-      <div className="flex flex-1">{children}</div>
+      <div className="flex flex-1 overflow-y-scroll">{children}</div>
     </div>
   );
 }
@@ -84,4 +84,3 @@ export const LogoIcon = () => {
     </a>
   );
 };
- 

@@ -57,7 +57,7 @@ const Navbar = () => {
               <div className="flex items-center space-x-2 sm:space-x-3">
                 {/* Login Button */}
                 <Link
-                  href="/login"
+                  href="/sign-in"
                   className="group relative px-3 py-1.5 sm:px-4 sm:py-2 text-gray-700 font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
                 >
                   <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-lg border border-white/30 group-hover:bg-white/30 group-hover:border-white/40 transition-all duration-300 shadow-md group-hover:shadow-lg"></div>
@@ -68,7 +68,7 @@ const Navbar = () => {
                 
                 {/* Get Started Button */}
                 <Link
-                  href="/signup"
+                  href="/sign-up"
                   className="group relative px-3 py-1.5 sm:px-4 sm:py-2 font-medium transition-all duration-300 hover:scale-105 cursor-pointer"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/90 to-purple-600/90 backdrop-blur-sm rounded-lg border border-white/30 shadow-lg group-hover:shadow-xl group-hover:from-indigo-500/90 group-hover:to-purple-500/90 transition-all duration-300"></div>

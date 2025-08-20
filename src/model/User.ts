@@ -1,6 +1,7 @@
 import mongoose , {Document,Schema}from "mongoose";
 
 export interface Note{
+    _id ?: string;
     title : string;
     description : string;
     createdAt : Date;
@@ -48,6 +49,7 @@ const pdfSchema : Schema<PDF> = new Schema<PDF>({
 })
 
 export interface YouTube {
+    _id ?: string;
     title : string;
     description : string;
     url : string;
