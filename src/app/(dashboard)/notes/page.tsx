@@ -3,6 +3,17 @@ import { Note } from '@/model/User';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Loader } from 'lucide-react';
+import { AnimatedNoteModal } from '@/components/AnimatedNoteModal';
 
 const Notes = () => {
     const [notes , setNotes] = useState<Note[]>([]);
@@ -13,8 +24,7 @@ const Notes = () => {
         setLoading(true);
         try {
             const result = await axios.get("/api/get-note");
-            console.log(result.data.data);
-            setNotes(result.data.data);
+            setNotes(result.data.notes);
         } catch (error) {
             console.log(error);
             toast.error("Error while fetching notes");
@@ -34,10 +44,29 @@ const Notes = () => {
             <p className='font-semibold'>Your Notes</p>
         </div>
         <div>
-            Button
+            <AnimatedNoteModal/>
         </div>
       </div>
       <hr className='mt-4'></hr>
+      <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 p-4'>
+        {loading ? (
+          <>
+            <Loader className='w-6 h-6 animate-spin mx-auto' /> Fetching Notes
+          </>
+        ) : (
+            notes.map((note)=>(
+            <Card key={note._id}>
+              <CardHeader>
+                <CardTitle>{note.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{note.description}</p>
+              </CardContent>
+            </Card>
+          ))
+        )}
+        
+      </div>
     </div>
   )
 }
