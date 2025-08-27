@@ -7,11 +7,11 @@ export async function middleware(request: NextRequest) {
     if(token && (
         url.pathname.startsWith('/sign-up') ||
         url.pathname.startsWith('/sign-in') ||
-        url.pathname.startsWith('/verify')
+        url.pathname.startsWith('/verify') 
     )){
         return NextResponse.redirect(new URL('/dashboard', request.url));
     }
-    if(!token && url.pathname === '/dashboard'){
+    if(!token && (url.pathname === '/dashboard')){
         return NextResponse.redirect(new URL('/sign-in', request.url));
     }
 }

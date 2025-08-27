@@ -38,7 +38,7 @@ export async function POST(request : Request){
             title,
             description,
             url,
-            preview : `https://img.youtube.com/vi/${url.split('=')[1]}/hqdefault.jpg`,
+            preview : `https://img.youtube.com/vi/${url.split('&')[0].split('=')[1]}/hqdefault.jpg`,
             createdAt : new Date()
         }
 
