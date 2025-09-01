@@ -2,6 +2,8 @@ import dbConnect from "@/lib/dbConnect";
 import { UserModel } from "@/model/User";
 import { PDF } from "@/model/User";
 import {v2 as cloudinary} from "cloudinary";
+import { getServerSession, User } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
 
 
 cloudinary.config({
@@ -19,11 +21,28 @@ interface CloudinaryUploadResponse {
 export async function POST(request : Request){
     await dbConnect();
 
+    const session = await getServerSession(authOptions);
+    const user : User = session?.user as User;
+
+    if(!session?.user || !session){
+        return Response.json({
+            success : false,
+            message : "User is not authenticated"
+        },{
+            status : 401
+        })
+    }
+
+    const userId = user._id;
+
 
     try {
-        const {username, title, description} = await request.json();
+        const formData = await request.formData();
+        const file = formData.get("pdf") as File | null;
+        const title = formData.get("title") as string;
+        const description = formData.get("description") as string;
 
-        const user = await UserModel.findOne({username});
+        const user = await UserModel.findById(userId);
 
         if(!user){
             return Response.json({
@@ -43,8 +62,7 @@ export async function POST(request : Request){
             });
         }
 
-        const formData = await request.formData();
-        const file = formData.get("pdf") as File | null;
+        
 
         if(!file){
             return Response.json({

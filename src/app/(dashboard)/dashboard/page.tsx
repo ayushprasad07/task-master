@@ -64,7 +64,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="p-4 mx-auto w-full ">
+    <div className="p-4 mx-auto w-full">
       <div>
         <h1 className="text-4xl font-bold text-center">Dashboard</h1>
       </div>
