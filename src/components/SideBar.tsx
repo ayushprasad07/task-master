@@ -12,6 +12,7 @@ import {
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { FileText } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 export default function SideBar({ children }: { children: React.ReactNode }) {
   const links = [
@@ -24,9 +25,9 @@ export default function SideBar({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); 
-    window.location.href = "/sign-in";  
+    signOut({ callbackUrl: "/sign-in" });
   };
+
 
   return (
     <div className={cn("mx-auto flex w-full flex-1 flex-col overflow-hidden border bg-gray-100 md:flex-row dark:bg-neutral-800", "h-[100vh]")}>

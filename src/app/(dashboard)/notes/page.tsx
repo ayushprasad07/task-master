@@ -14,10 +14,14 @@ import {
 } from "@/components/ui/card"
 import { Loader } from 'lucide-react';
 import { AnimatedNoteModal } from '@/components/AnimatedNoteModal';
+import { Button } from '@/components/ui/button';
+import { AnimatedViewModal } from '@/components/AnimatedViewModal';
+
 
 const Notes = () => {
     const [notes , setNotes] = useState<Note[]>([]);
     const [loading , setLoading] = useState(false);
+    
 
     useEffect(()=>{
       const fetchNotes = async () => {
@@ -60,8 +64,14 @@ const Notes = () => {
                 <CardTitle>{note.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p>{note.description}</p>
+                <p>{note.description.slice(0,100)} ...........</p>
               </CardContent>
+              <CardFooter>
+                <CardAction>
+                  {/* <Button className='cursor-pointer'>Read More</Button> */}
+                  <AnimatedViewModal id={note._id}/>
+                </CardAction>
+              </CardFooter>
             </Card>
           ))
         )}

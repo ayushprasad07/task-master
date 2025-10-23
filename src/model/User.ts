@@ -23,6 +23,7 @@ const noteSchema : Schema<Note> = new Schema<Note>({
 })
 
 export interface PDF{
+    _id ?: string;
     title : string;
     description : string;
     url : string;
