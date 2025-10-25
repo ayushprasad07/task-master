@@ -8,36 +8,57 @@ import {
   ModalTrigger,
 } from "./ui/animated-modal";
 import axios from "axios";
-import { title } from "process";
+import { toast } from "sonner";
 
 type ModalProps = {
-    id ?: String
-}
+  id?: string;
+};
 
-export function AnimatedViewModal({id} : ModalProps) {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
+export function AnimatedViewModal({ id }: ModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // 👈 manual modal state tracking
 
-    useEffect(()=>{
-        const fetchNote = async () => {
-            if(!id) return
-            try {
-                const response = await axios.get(`/api/get-specific-note/${id}`);
-                console.log(response.data.note);
-                setTitle(response.data.note.title);
-                setDescription(response.data.note.description);
-            } catch (error) {
-                console.log(error);
-            }
+  // Fetch note when modal opens
+  useEffect(() => {
+    const fetchNote = async () => {
+      if (!id || !isOpen) return;
+      setLoading(true);
+      try {
+        const response = await axios.get(`/api/get-specific-note/${id}`);
+        console.log("Response",response.data);
+        const noteData = Array.isArray(response.data)
+          ? response.data[0]?.note
+          : response.data?.note;
+
+          console.log("NoteData",noteData);
+
+        if (!noteData) {
+          toast.error("Note not found");
+          return;
         }
 
-        fetchNote();
-    },[id]);
+        setTitle(noteData.title);
+        setDescription(noteData.description);
+      } catch (error) {
+        console.error("Error fetching note:", error);
+        toast.error("Error fetching note");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNote();
+  }, [isOpen, id]);
 
   return (
-    <div className="py-2  flex items-center justify-center">
+    <div className="py-2 flex items-center justify-center">
       <Modal>
-        <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
+        <ModalTrigger
+          onClick={() => setIsOpen(true)} // 👈 set open when clicked
+          className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn"
+        >
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
             View Note
           </span>
@@ -45,17 +66,22 @@ export function AnimatedViewModal({id} : ModalProps) {
             📝
           </div>
         </ModalTrigger>
+
         <ModalBody>
-          <ModalContent>
-            <h1>{title}</h1>
-            <p>
-                {description}
-            </p>
+          <ModalContent className="overflow-y-auto">
+            {loading ? (
+              <p className="text-center text-gray-500">Loading...</p>
+            ) : (
+              <>
+                <h1 className="text-xl font-bold mb-2">{title}</h1>
+                <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                  {description}
+                </p>
+              </>
+            )}
           </ModalContent>
+
           <ModalFooter className="gap-4">
-            <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
-              Close
-            </button>
             <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
               Edit
             </button>
@@ -65,4 +91,3 @@ export function AnimatedViewModal({id} : ModalProps) {
     </div>
   );
 }
-

@@ -39,7 +39,7 @@ export async function GET(
             // }
         ])
 
-        console.log("Note",note)
+        // console.log("Note",note)
 
         if(!note){
             return Response.json({
@@ -53,7 +53,7 @@ export async function GET(
         return Response.json({
             success : true,
             message : "Note found",
-            note : note[0].notes[0]
+            note : note[0].notes
         })
     } catch (error) {
         return Response.json({
