@@ -27,9 +27,16 @@ export async function DELETE(req: Request,
     try {
         const {noteid} = await params;
 
-        const user = await UserModel.findOne(userId).findByIdAndDelete(noteid);
+        const noteId = new mongoose.Types.ObjectId(noteid);
 
-        if(!user){
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            user._id,
+            { $pull: { notes: { _id: noteId } } },
+            { new: true } // returns the updated user
+        );
+
+        if(!updatedUser){
+            console.log("User not found");
             return Response.json({
                 success : false,
                 message : "User not found"

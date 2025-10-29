@@ -47,8 +47,8 @@ const SignIn = () => {
     }
   };
   return (
-    <div className="flex h-screen items-center justify-center p-2">
-        <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+    <div className="fixed inset-0 flex h-screen items-center justify-center p-4">
+        <div className="shadow-input shadow-bg mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
             <h2 className="text-2xl font-semibold text-center font-bold text-neutral-800 dark:text-neutral-200">
                 Welcome to Task-Master
             </h2>
